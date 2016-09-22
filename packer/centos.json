@@ -12,7 +12,7 @@
       "ssh_port": "{{user `ssh_port`}}",
       "ssh_keypair_name": "{{user `ssh_keypair_name`}}",
       "ssh_private_key_file": "{{user `ssh_private_key_file`}}",
-      "ssh_username": "centos",
+      "ssh_username": "ec2-user",
       "ssh_timeout": "5m",
       "ssh_pty" : "true",
       "tags" : {

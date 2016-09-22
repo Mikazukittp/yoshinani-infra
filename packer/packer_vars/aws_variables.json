@@ -4,7 +4,7 @@
   "awsupdate": "false",
   "playbook_name": "role_base.yml",
   "ami_name": "centos6-rails-standard",
-  "ami_id": "ami-fa3d3f94",
+  "ami_id": "ami-374db956",
   "ssh_port": "45621",
   "ssh_keypair_name": "yoshinani_packer",
   "ssh_private_key_file": "../secrets/yoshinani_packer.private_key"
