@@ -34,11 +34,6 @@
       ]
     },
     {
-      "type": "ansible-local",
-      "playbook_dir" : "./",
-      "playbook_file" : "./sample.yml"
-    },
-    {
       "environment_vars": [
         "UPDATE={{user `awsupdate`}}"
       ],
