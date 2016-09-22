@@ -19,10 +19,9 @@
         "Name"       : "{{isotime | clean_ami_name}}_{{user `playbook_name`}}",
         "PackerName" : "{{user `ami_name`}}",
         "source_ami" : "{{user `ami_id`}}",
-        "service"    : "{{user `service`}}",
-        "playbook"   : "{{user `playbook_name`}}"
+        "service"    : "{{user `service`}}"
       },
-      "ami_name": "{{user `service`}}_{{user `playbook_name`}}_{{user `ami_name`}}_{{isotime | clean_ami_name}}",
+      "ami_name": "{{user `service`}}_{{user `ami_name`}}_{{isotime | clean_ami_name}}",
       "user_data_file": "user_data/user_data.sh"
     }
   ],
