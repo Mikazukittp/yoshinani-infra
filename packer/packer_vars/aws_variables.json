@@ -1,0 +1,11 @@
+{
+  "_comment": "build with `packer build -only=amazon-ebs -var 'service=yoshinani' -var 'stage=prod' -var 'ssh_port=22' -var 'awsupdate=true' -var-file='packer_vars/aws_variables.json' centos.json`",
+  "stage": "local",
+  "awsupdate": "false",
+  "playbook_name": "role_base.yml",
+  "ami_name": "centos6-rails-standard",
+  "ami_id": "ami-fa3d3f94",
+  "ssh_port": "45621",
+  "ssh_keypair_name": "yoshinani_packer",
+  "ssh_private_key_file": "../secrets/yoshinani_packer.private_key"
+}
