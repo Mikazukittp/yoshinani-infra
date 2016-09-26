@@ -1,36 +1,57 @@
+## CI_SERVERについて
+基本的にあまりアクセストークンの運用はしたくない（漏れた時のリスク）ので、信頼のおける作業用サーバを用意してそのインスタンスに権限を付与する、という構成にしております。
+
+AWSではインスタンス事態にロールを割り当てることができるので、全ての作業をこのサーバ経由で行うことによりアクセスキーが不要になります。
+ロールの詳細ですが、terraformを使う関係で（ほぼ全ての権限がないと無理）Administratorにしております。
+
+立ち上げっぱなしだとお金かかるので普段は寝かせています。
+もし必要あれば叩き起こしてあげてくださいまし。
+
+ちなみにElastic IPとかはやってないので毎度public ip は変わります。
+
 ## Packer
 ### 使い方
-現状、packer上にawsのアクセスキーを持たせていないため、ローカルで実行しても動きません。
-
-yoshinaniの環境で利用するためには以下が必要です（下記インスタンス、作成して停止してあります）
-* 「CI_SERVER」というロールを設定したEC2インスタンスを作成する
-* そのサーバ上にansible,packer,terraformをインストールする
-
-```
-sudo pip install ansible
-wget -O /tmp/packer.zip https://releases.hashicorp.com/packer/0.10.1/packer_0.10.1_linux_amd64.zip
-sudo unzip /tmp/packer.zip -d /usr/local/bin/
-wget -O /tmp/terraform.zip https://releases.hashicorp.com/terraform/0.7.4/terraform_0.7.4_linux_amd64.zip
-sudo unzip /tmp/terraform.zip -d /usr/local/bin/
-```
-
-* このリポジトリをcloneする
+* CI_SERVERにsshログインする
 * packerのディレクトリ（centos.jsonがあるディレクトリ）で以下のコマンドを実行する
 
 ```
 $ packer build -var-file='packer_vars/aws_variables.json' centos.json
 ```
 
-#### CI_SERVERというロールについて
-基本的にあまりアクセストークンの運用はしたくない（漏れた時のリスク）ので、信頼のおける作業用サーバを用意してそのインスタンスに権限を付与する、という構成にしております。
-
-このロールの詳細ですが、ec2インスタンスのみに紐付け可能なロールで権限はAdministratorAccess（今後terraformなども使おうとしているので権限かなり強い）です。
-
-
 #### やろうと思ったができていないこと
 * セキュリティグループの設定
 * ssh周りの設定
 * key周りの設定
+
+## terraform
+### 現状の構成
+json見てもらえるとわかりやすいかと思いますが、
+以下が現時点で自動化できている内容です。
+
+* VPCの作成
+* VPCに紐づくpublic/privateサブネットをそれぞれひとつづつ作成
+* インターネットゲートウェイを作成
+* ルートテーブルの設定でpublicサブネットがインターネットに出れるようにする
+* pablicサブネットにyoshinaniのマシンイメージから作成したEC2を作成
+
+### 使い方
+* CI_SERVERにsshログインする
+* terraform/dev（server.tfがあるディレクトリ）で以下のコマンドを実行する
+（destroyで綺麗さっぱい消えてくれるのでテストやりまくってもOKです）
+
+```
+# Dry Run
+$ terraform plan
+
+# terraform実行
+$ terraform apply
+
+# 実行結果の確認
+$ terraform show
+
+# お片づけ
+$ terraform destroy
+```
 
 ## Ansible
 まだ特に何も用意していません。
