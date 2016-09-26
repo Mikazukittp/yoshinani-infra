@@ -8,7 +8,7 @@ variable "web_ami-id" {
 variable "stage" {
   default = "dev"
 }
-variable "appname" {
+variable "app_name" {
   default = "Yoshinani"
 }
 
@@ -37,7 +37,7 @@ resource "aws_internet_gateway" "yoshinani-vpc-igw" {
 # Public Subnet Settings
 #####################################
 resource "aws_subnet" "public-subnet-a" {
-  vpc_id = "${aws_vpc.myVPC.id}"
+  vpc_id = "${aws_vpc.yoshinani-vpc.id}"
   cidr_block = "10.1.1.0/24"
   availability_zone = "ap-northeast-1a"
   tags {
@@ -49,7 +49,7 @@ resource "aws_subnet" "public-subnet-a" {
 # Private Subnet Settings
 #####################################
 resource "aws_subnet" "private-subnet-a" {
-  vpc_id = "${aws_vpc.myVPC.id}"
+  vpc_id = "${aws_vpc.yoshinani-vpc.id}"
   cidr_block = "10.1.200.0/24"
   availability_zone = "ap-northeast-1a"
   tags {
@@ -72,7 +72,7 @@ resource "aws_route_table" "public-route" {
 }
 
 resource "aws_route_table_association" "puclic-a" {
-  subnet_id = "${aws_subnet.public-a.id}"
+  subnet_id = "${aws_subnet.public-subnet-a.id}"
   route_table_id = "${aws_route_table.public-route.id}"
 }
 
