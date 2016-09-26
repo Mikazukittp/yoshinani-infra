@@ -2,9 +2,18 @@
 ### 使い方
 現状、packer上にawsのアクセスキーを持たせていないため、ローカルで実行しても動きません。
 
-yoshinaniの環境で利用するためには以下が必要です
+yoshinaniの環境で利用するためには以下が必要です（下記インスタンス、作成して停止してあります）
 * 「CI_SERVER」というロールを設定したEC2インスタンスを作成する
-* そのサーバ上にansibleとpackerをインストールする
+* そのサーバ上にansible,packer,terraformをインストールする
+
+```
+sudo pip install ansible
+wget -O /tmp/packer.zip https://releases.hashicorp.com/packer/0.10.1/packer_0.10.1_linux_amd64.zip
+sudo unzip /tmp/packer.zip -d /usr/local/bin/
+wget -O /tmp/terraform.zip https://releases.hashicorp.com/terraform/0.7.4/terraform_0.7.4_linux_amd64.zip
+sudo unzip /tmp/terraform.zip -d /usr/local/bin/
+```
+
 * このリポジトリをcloneする
 * packerのディレクトリ（centos.jsonがあるディレクトリ）で以下のコマンドを実行する
 
