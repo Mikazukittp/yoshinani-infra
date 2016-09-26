@@ -79,4 +79,7 @@ resource "aws_route_table_association" "puclic-a" {
 resource "aws_instance" "web_server" {
   ami = "${var.web_ami-id}"
   instance_type = "t2.micro"
+  tags {
+    Name = "${var.app_name}-dev"
+  }
 }
